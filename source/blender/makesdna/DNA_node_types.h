@@ -902,6 +902,20 @@ typedef struct NodeTexMagic {
   char _pad[4];
 } NodeTexMagic;
 
+typedef struct NodeRDPTile {
+  ImageUser iuser;
+  float sl;
+  float tl;
+  float sh;
+  float th;
+  short shift_s;
+  short shift_t;
+  char mask_s;
+  char mask_t;
+  char cm_s;
+  char cm_t;
+} NodeRDPTile;
+
 typedef struct NodeShaderAttribute {
   char name[64];
 } NodeShaderAttribute;

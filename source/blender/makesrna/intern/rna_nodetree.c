@@ -3994,6 +3994,97 @@ static void def_math(StructRNA *srna)
   RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
 }
 
+static void def_rdp_tile(StructRNA *srna)
+{
+  PropertyRNA *prop;
+
+  prop = RNA_def_property(srna, "image", PROP_POINTER, PROP_NONE);
+  RNA_def_property_pointer_sdna(prop, NULL, "id");
+  RNA_def_property_struct_type(prop, "Image");
+  RNA_def_property_flag(prop, PROP_EDITABLE);
+  RNA_def_property_override_flag(prop, PROPOVERRIDE_OVERRIDABLE_LIBRARY);
+  RNA_def_property_ui_text(prop, "Image", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_tex_image_update");
+
+  RNA_def_struct_sdna_from(srna, "NodeRDPTile", "storage");
+
+  prop = RNA_def_property(srna, "sl", PROP_FLOAT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 1023.75f);
+  RNA_def_property_ui_range(prop, 0.0f, 1023.75f, 25.0f, 2);
+  RNA_def_property_ui_text(prop, "SL", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "tl", PROP_FLOAT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 1023.75f);
+  RNA_def_property_ui_range(prop, 0.0f, 1023.75f, 25.0f, 2);
+  RNA_def_property_ui_text(prop, "TL", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "sh", PROP_FLOAT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 1023.75f);
+  RNA_def_property_float_default(prop, 31.0f);
+  RNA_def_property_ui_range(prop, 0.0f, 1023.75f, 25.0f, 2);
+  RNA_def_property_ui_text(prop, "SH", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "th", PROP_FLOAT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 1023.75f);
+  RNA_def_property_float_default(prop, 31.0f);
+  RNA_def_property_ui_range(prop, 0.0f, 1023.75f, 25.0f, 2);
+  RNA_def_property_ui_text(prop, "TH", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "mask_s", PROP_INT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 15.0f);
+  RNA_def_property_ui_range(prop, 0, 15, 1, 0);
+  RNA_def_property_ui_text(prop, "Mask S", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "mask_t", PROP_INT, PROP_UNSIGNED);
+  RNA_def_property_range(prop, 0.0f, 15.0f);
+  RNA_def_property_ui_range(prop, 0, 15, 1, 0);
+  RNA_def_property_ui_text(prop, "Mask T", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "shift_s", PROP_INT, PROP_NONE);
+  RNA_def_property_range(prop, -5.0f, 10.0f);
+  RNA_def_property_ui_range(prop, -5, 10, 1, 0);
+  RNA_def_property_ui_text(prop, "Shift S", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "shift_t", PROP_INT, PROP_NONE);
+  RNA_def_property_range(prop, -5.0f, 10.0f);
+  RNA_def_property_ui_range(prop, -5, 10, 1, 0);
+  RNA_def_property_ui_text(prop, "Shift T", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "mirror_s", PROP_BOOLEAN, PROP_NONE);
+  RNA_def_property_boolean_sdna(prop, NULL, "cm_s", 1);
+  RNA_def_property_ui_text(prop, "Mirror S", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "mirror_t", PROP_BOOLEAN, PROP_NONE);
+  RNA_def_property_boolean_sdna(prop, NULL, "cm_t", 1);
+  RNA_def_property_ui_text(prop, "Mirror T", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "clamp_s", PROP_BOOLEAN, PROP_NONE);
+  RNA_def_property_boolean_sdna(prop, NULL, "cm_s", 2);
+  RNA_def_property_ui_text(prop, "Clamp S", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "clamp_t", PROP_BOOLEAN, PROP_NONE);
+  RNA_def_property_boolean_sdna(prop, NULL, "cm_t", 2);
+  RNA_def_property_ui_text(prop, "Clamp T", "");
+  RNA_def_property_update(prop, NC_NODE | NA_EDITED, "rna_Node_update");
+
+  prop = RNA_def_property(srna, "image_user", PROP_POINTER, PROP_NONE);
+  RNA_def_property_flag(prop, PROP_NEVER_NULL);
+  RNA_def_property_pointer_sdna(prop, NULL, "iuser");
+  RNA_def_property_ui_text(prop, "Image User", "Parameters defining which layer, pass and frame of the image is displayed");
+  RNA_def_property_update(prop, 0, "rna_Node_update");
+}
+
 static void def_vector_math(StructRNA *srna)
 {
   PropertyRNA *prop;

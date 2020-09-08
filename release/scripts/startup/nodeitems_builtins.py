@@ -232,6 +232,7 @@ shader_node_categories = [
         NodeItem("ShaderNodeBsdfHairPrincipled", poll=object_cycles_shader_nodes_poll)
     ]),
     ShaderNodeCategory("SH_NEW_TEXTURE", "Texture", items=[
+        NodeItem("ShaderNodeRDPTile"),
         NodeItem("ShaderNodeTexImage"),
         NodeItem("ShaderNodeTexEnvironment"),
         NodeItem("ShaderNodeTexSky"),

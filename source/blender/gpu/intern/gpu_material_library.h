@@ -82,6 +82,7 @@ extern char datatoc_gpu_shader_material_output_material_glsl[];
 extern char datatoc_gpu_shader_material_output_world_glsl[];
 extern char datatoc_gpu_shader_material_particle_info_glsl[];
 extern char datatoc_gpu_shader_material_principled_glsl[];
+extern char datatoc_gpu_shader_material_rdp_tile_glsl[];
 extern char datatoc_gpu_shader_material_refraction_glsl[];
 extern char datatoc_gpu_shader_material_rgb_curves_glsl[];
 extern char datatoc_gpu_shader_material_rgb_to_bw_glsl[];
@@ -367,6 +368,11 @@ static GPUMaterialLibrary gpu_shader_material_principled_library = {
     .dependencies = {NULL},
 };
 
+static GPUMaterialLibrary gpu_shader_material_rdp_tile_library = {
+    .code = datatoc_gpu_shader_material_rdp_tile_glsl,
+    .dependencies = {NULL},
+};
+
 static GPUMaterialLibrary gpu_shader_material_refraction_library = {
     .code = datatoc_gpu_shader_material_refraction_glsl,
     .dependencies = {NULL},
@@ -611,6 +617,7 @@ static GPUMaterialLibrary *gpu_material_libraries[] = {
     &gpu_shader_material_output_world_library,
     &gpu_shader_material_particle_info_library,
     &gpu_shader_material_principled_library,
+    &gpu_shader_material_rdp_tile_library,
     &gpu_shader_material_refraction_library,
     &gpu_shader_material_rgb_curves_library,
     &gpu_shader_material_rgb_to_bw_library,

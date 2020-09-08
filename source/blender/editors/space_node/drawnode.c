@@ -271,6 +271,46 @@ static void node_buts_math(uiLayout *layout, bContext *UNUSED(C), PointerRNA *pt
   uiItemR(layout, ptr, "use_clamp", 0, NULL, ICON_NONE);
 }
 
+static void node_buts_image_user(uiLayout *layout,
+                                 bContext *C,
+                                 PointerRNA *ptr,
+                                 PointerRNA *imaptr,
+                                 PointerRNA *iuserptr,
+                                 bool compositor);
+
+static void node_shader_buts_rdp_tile(uiLayout *layout, bContext *C, PointerRNA *ptr)
+{
+  PointerRNA imaptr = RNA_pointer_get(ptr, "image");
+  PointerRNA iuserptr = RNA_pointer_get(ptr, "image_user");
+
+  uiLayoutSetContextPointer(layout, "image_user", &iuserptr);
+  uiTemplateID(layout,
+               C,
+               ptr,
+               "image",
+               "IMAGE_OT_new",
+               "IMAGE_OT_open",
+               NULL,
+               UI_TEMPLATE_ID_FILTER_ALL,
+               false,
+               NULL);
+
+  uiItemR(layout, ptr, "sl", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "tl", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "sh", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "th", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "mask_s", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "mask_t", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "shift_s", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "shift_t", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "mirror_s", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "mirror_t", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "clamp_s", 0, NULL, ICON_NONE);
+  uiItemR(layout, ptr, "clamp_t", 0, NULL, ICON_NONE);
+
+  node_buts_image_user(layout, C, &iuserptr, &imaptr, &iuserptr, false);
+}
+
 static int node_resize_area_default(bNode *node, int x, int y)
 {
   if (node->flag & NODE_HIDDEN) {
@@ -1195,6 +1235,9 @@ static void node_shader_set_butfunc(bNodeType *ntype)
       break;
     case SH_NODE_MATH:
       ntype->draw_buttons = node_buts_math;
+      break;
+    case SH_NODE_RDP_TILE:
+      ntype->draw_buttons = node_shader_buts_rdp_tile;
       break;
     case SH_NODE_VECTOR_MATH:
       ntype->draw_buttons = node_shader_buts_vect_math;
